@@ -7,6 +7,7 @@ use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Utility\Inflector;
+use Rochamarcelo\CakephpFieldsMapper\EntityInfoExtractor;
 use Rochamarcelo\CakephpFieldsMapper\TableProcessor;
 
 /**
@@ -65,10 +66,12 @@ class FieldsMapperCommand extends Command
             return;
         }
         $processor = new TableProcessor();
+        $extractor = new EntityInfoExtractor();
         foreach ($items as $table) {
             $io->out('Processing file ' . $table['pathTable']);
             try {
-                $output = $processor->process($table['pathTable'], $table['pathEntity']);
+                $entityInfo = $extractor->extract($table['pathEntity']);
+                $output = $processor->process($table['pathTable'], $entityInfo);
                 file_put_contents($table['pathTable'], $output);
             } catch (\Exception $e) {
                 $io->error($e->getMessage());
