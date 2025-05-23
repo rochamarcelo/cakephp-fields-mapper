@@ -1,0 +1,13 @@
+{
+    "name": "rochamarcelo/cakephp-fields-mapper",
+    "description": "Map Entity::FIELD_ constants",
+    "autoload": {
+        "psr-4": {
+            "Rochamarcelo\\CakephpFieldsMapper\\": "src/"
+        }
+    },
+    "require": {
+        "nikic/php-parser": "^5.0.0",
+        "cakephp/cakephp": "^5.2"
+    }
+}
