@@ -30,6 +30,10 @@ class TableProcessor
      */
     public function process(string $tableFilePath, string $entityFilePath): string
     {
+        $entityInfo = $this->extractEntityInfo($entityFilePath);
+        if (empty($entityInfo->fields)) {
+            throw new \UnexpectedValueException('No constant fields defined');
+        }
         $content = file_get_contents($tableFilePath);
         $version = PhpVersion::getHostVersion();
         $lexer = $this->createLexer($version);
@@ -39,7 +43,6 @@ class TableProcessor
             throw new \UnexpectedValueException('Could not retrieve nodes from "' . $tableFilePath . '"');
         }
         $oldTokens = $parser->getTokens();
-        $entityInfo = $this->extractEntityInfo($entityFilePath);
         $clonedNodes = $this->cloneTree($nodeTree);
 
         $traverser = new NodeTraverser();
