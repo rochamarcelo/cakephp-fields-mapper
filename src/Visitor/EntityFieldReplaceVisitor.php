@@ -11,7 +11,7 @@ class EntityFieldReplaceVisitor extends NodeVisitorAbstract
 {
 
     /**
-     * @param array<string, array{entity: string, constant: string}> $fieldsMap
+     * @param array<string, \Rochamarcelo\CakephpFieldsMapper\Data\EntityField> $fieldsMap
      */
     public function __construct(private array $fieldsMap)
     {
@@ -25,8 +25,8 @@ class EntityFieldReplaceVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Node\Scalar\String_ && isset($this->fieldsMap[$node->value])) {
             return new Node\Expr\ClassConstFetch(
-                new Name($this->fieldsMap[$node->value]['entity']),
-                new Identifier($this->fieldsMap[$node->value]['constant'])
+                new Name($this->fieldsMap[$node->value]->entityName),
+                new Identifier($this->fieldsMap[$node->value]->const)
             );
         }
 

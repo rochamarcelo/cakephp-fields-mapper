@@ -2,4 +2,6 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 $processor = new \Rochamarcelo\CakephpFieldsMapper\TableProcessor();
-$processor->process(__DIR__ . '/src/Model/Table/UsersTable.php');
+$outputContent = $processor->process(__DIR__ . '/src/Model/Table/UsersTable.php', __DIR__ . '/src/Model/Entity/User.php');
+file_put_contents('UsersTableNew.php', $outputContent);
+
